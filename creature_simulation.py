@@ -84,6 +84,29 @@ class SwimmingCreature(Creature):
             target.hp = 0
 
         print(f"{target.name} HP: {target.hp}")
+class FireCreature(Creature):
+    def __init__(self, name, hp, attack_power):
+        super().__init__(name, hp, attack_power)
+        self.fire_level = 0
+
+    def emit_fire(self, new_fire_level):
+        self.fire_level = max(0, min(100, new_fire_level))
+        print(f"{self.name} fire level: {self.fire_level}")
+
+    def attack(self, target):
+        if not self.is_alive():
+            print(f"{self.name} cannot attack because it is defeated.")
+            return
+
+        damage = self.attack_power + self.fire_level // 10
+
+        print(f"{self.name} uses fire attack!")
+        target.hp -= damage
+
+        if target.hp < 0:
+            target.hp = 0
+
+        print(f"{target.name} HP: {target.hp}")
 
 
 if __name__ == "__main__":
@@ -91,16 +114,14 @@ if __name__ == "__main__":
     dragon = Creature("Dragon", 100, 15)
     hawk = FlyingCreature("Hawk", 50, 10)
     dummy = Creature("Dummy", 40, 0)
-<<<<<<< HEAD
     hawk.fly_to(100)
     hawk.attack(dummy)
     fish = SwimmingCreature("Shark", 70, 12)
     dummy = Creature("Dummy", 40, 0)
-=======
-
-    hawk.fly_to(100)
-    hawk.attack(dummy)
->>>>>>> flying_creature
+    dragon = FireCreature("Fire Dragon", 100, 15)
+    dummy = Creature("Dummy", 100, 0)
+    dragon.emit_fire(80)
+    dragon.attack(dummy)
 
     fish.dive_to(30)
     fish.attack(dummy)
